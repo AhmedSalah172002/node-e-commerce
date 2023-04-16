@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar mb-5 navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto ">
+              
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <% if(isUser){ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/cart">Card</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/orders">Order</a>
+              </li>
+              <% }else{ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/signup">Signup</a>
+              </li>
+              <% } %>
+              <% if(isAdmin){ %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/add">Add Product</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/orders">Manage Orders</a>
+                </li>
+                <% } %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container text-center">
+
+        <% if(productAdded) { %>
+        <p class="alert alert-success">
+            Product added successfully
+        </p>
+        <% } %>
+    
+        <h3>Add Product</h3>
+        <form action="/admin/add" method="POST" enctype="multipart/form-data">
+            <input type="text" class="form-control mb-3" name="name" placeholder="Name">
+            <% let nameError = validationErrors.find(err => err.param === 'name') %>
+            <% if (nameError) { %>
+                <p class="alert alert-danger">
+                    <%= nameError.msg %>
+                </p>
+            <% } %>
+            <input type="number" class="form-control mb-3" name="price" placeholder="Price">
+            <% let priceError = validationErrors.find(err => err.param === 'price') %>
+            <% if (priceError) { %>
+                <p class="alert alert-danger">
+                    <%= priceError.msg %>
+                </p>
+            <% } %>
+            <textarea type="password" class="form-control mb-3" name="description" placeholder="Description"></textarea>
+            <% let descriptionError = validationErrors.find(err => err.param === 'description') %>
+            <% if (descriptionError) { %>
+                <p class="alert alert-danger">
+                    <%= descriptionError.msg %>
+                </p>
+            <% } %>
+            <select type="password" class="form-control mb-3" name="category">
+                <option value="" selected>Choose a category</option>
+                <option value="clothes">Clothes</option>
+                <option value="phones">Phones</option>
+                <option value="computers">Computers</option>
+            </select>
+            <% let categoryError = validationErrors.find(err => err.param === 'category') %>
+            <% if (categoryError) { %>
+                <p class="alert alert-danger">
+                    <%= categoryError.msg %>
+                </p>
+            <% } %>
+            <input type="file" class="form-control mb-3" name="image" placeholder="Image">
+            <% let imageError = validationErrors.find(err => err.param === 'image') %>
+            <% if (imageError) { %>
+                <p class="alert alert-danger">
+                    <%= imageError.msg %>
+                </p>
+            <% } %>
+            <input type="submit" value="Add Product" class="btn btn-primary">
+        </form>
+    </div>
+    
+
+      <script src="/js/bootstrap.min.js"></script>
+      <script src="/js/popper.min.js"></script>
+</body>
+</html>
+
+
+
+
+

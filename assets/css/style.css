@@ -1,0 +1,28 @@
+
+.card-img-top{
+    width: 100px !important;
+    margin: auto;
+}
+.card-title{
+    font-size: 1em !important;
+}
+.card-text{
+    text-overflow: ellipsis;
+    width: 100px;
+    overflow: hidden;     
+    white-space: nowrap;
+   
+}
+
+
+table,
+td {
+    border: 1px solid #000;
+    padding: 10px;
+}
+
+.All-options{
+    position: fixed;
+    bottom: 25px;
+    right:25px;
+}

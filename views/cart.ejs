@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+  <nav class="navbar mb-5 navbar-expand-lg bg-body-tertiary">
+    <div class="container">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto ">
+          
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <% if(isUser){ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/cart">Card</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/orders">Order</a>
+          </li>
+          <% }else{ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/signup">Signup</a>
+          </li>
+          <% } %>
+          <% if(isAdmin){ %>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/add">Add Product</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/orders">Manage Orders</a>
+            </li>
+            <% } %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+      <div class="container">
+        <% if(validationError) { %>
+            <p class="alert alert-danger">
+                <%= validationError.msg%>
+            </p>
+        <% } %>
+
+        <% if(items.length === 0) { %>
+            <p class="alert alert-danger">There is no items</p>
+        <% } else { %>
+        
+            <table>
+                <thead>
+                    <td>no</td>
+                    <td>Product name</td>
+                    <td>Price</td>
+                    <td>Amount</td>
+                    <td>Total</td>
+                    <td></td>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < items.length; i++) { %>
+                        <tr>
+                            <td> <%= i+1 %> </td>
+                            <td> <a href="/product/<%= items[i].productId %>"><%= items[i].name %></a> </td>
+                            <td> <%= items[i].price %> $ </td>
+                            <form method="POST">
+                                <td> <input type="text" name="amount" class="form-control" value="<%= items[i].amount %>"> </td>
+                                <td> <%= (items[i].price * items[i].amount).toFixed(2) %> $ </td>
+                                <td>
+                                    <input type="hidden" name="cartId" value="<%= items[i]._id %>">
+                                    <input type="submit" class="btn btn-success" value="Save" formaction="/cart/save">
+                                    <a class="btn btn-primary" href="/verify-order?order=<%= items[i]._id %>"> Order </a>
+                                    <input type="submit" class="btn btn-danger" value="Delete" formaction="/cart/delete">
+                                </td>
+                            </form>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+
+            <form class="All-options"  method="post">
+              <input type="submit" class="btn btn-primary" value="Order All" formaction="/cart/orderAll" >
+
+                <input type="submit" class="btn btn-danger" value="Delete All" formaction="/cart/deleteAll" >
+            </form>
+    
+        <% } %>
+    
+    </div>
+      <script src="/js/bootstrap.min.js"></script>
+      <script src="/js/popper.min.js"></script>
+</body>
+</html>
